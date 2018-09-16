@@ -1,6 +1,5 @@
 package com.macbitsgoa.comrades.useractivity;
 
-import org.jetbrains.annotations.NotNull;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -10,11 +9,12 @@ import androidx.room.PrimaryKey;
 @Entity()
 public class UserActivityModel {
 
-    @PrimaryKey  //courseId for courses and file Id for files
+    //courseId for courses and file Id for files
     @NonNull
     @ColumnInfo(name = "_id")
     public String _id;
-
+    @PrimaryKey(autoGenerate = true)
+    public Long primaryKey;
     @ColumnInfo(name = "courseId")
     public String courseId;
     @ColumnInfo(name = "name") //course name for courses and file name for files
@@ -50,14 +50,6 @@ public class UserActivityModel {
 
     public void setId(String id) {
         this._id = id;
-    }
-
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(@NotNull String course_id) {
-        this.courseId = course_id;
     }
 
     @NonNull
