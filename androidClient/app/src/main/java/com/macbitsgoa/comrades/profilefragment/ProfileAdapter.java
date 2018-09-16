@@ -18,8 +18,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileViewHolder> {
     private final ArrayList<String> items = new ArrayList<>();
 
     ProfileAdapter() {
+        items.add("My Activity");
         items.add("My Courses");
-        items.add("My Uploads");
         items.add("Notifications");
         items.add("Menus");
         items.add("Imp. Documents");

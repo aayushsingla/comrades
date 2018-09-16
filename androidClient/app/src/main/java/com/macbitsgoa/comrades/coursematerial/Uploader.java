@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.macbitsgoa.comrades.R;
 import com.macbitsgoa.comrades.persistance.Database;
+import com.macbitsgoa.comrades.useractivity.UserActivityModel;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -50,6 +52,7 @@ import static com.macbitsgoa.comrades.coursematerial.UploadUtil.fileToBytes;
 import static com.macbitsgoa.comrades.coursematerial.UploadUtil.getFileExtension;
 import static com.macbitsgoa.comrades.coursematerial.UploadUtil.getMimeType;
 import static com.macbitsgoa.comrades.coursematerial.UploadUtil.sendNotification;
+import static com.macbitsgoa.comrades.useractivity.UserActivity.ACTION_FILE_ADDED;
 
 /**
  * {@link Worker} for uploading files.
@@ -74,6 +77,8 @@ public class Uploader extends Worker {
     private String fileId;
     private long fileSize;
     private String fileHash;
+    private String thumbnailLink;
+    private String iconLink;
     private NotificationManager notificationManager;
     private NotificationCompat.Builder builder;
     private int notificationId;
@@ -160,9 +165,11 @@ public class Uploader extends Worker {
             notifyFailure();
             return Result.FAILURE;
         }
+        addToLog();
         notifySuccess();
         return Result.SUCCESS;
     }
+
 
     /**
      * Get metadata for the file.
@@ -287,9 +294,8 @@ public class Uploader extends Worker {
         final JSONObject ownerObject = (JSONObject) jsonObject.getJSONArray("owners").get(0);
         final String owner = (String) ownerObject.get("displayName");
         final Boolean hasThumbnail = (Boolean) jsonObject.get("hasThumbnail");
-        String thumbnailLink;
         thumbnailLink = hasThumbnail ? (String) jsonObject.get("thumbnailLink") : (String) jsonObject.get("iconLink");
-        String iconLink = (String) jsonObject.get("iconLink");
+        iconLink = (String) jsonObject.get("iconLink");
         iconLink = iconLink.replace("16", "128");
         final CourseMaterial itemCourseMaterial = new CourseMaterial();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -367,4 +373,20 @@ public class Uploader extends Worker {
         builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         notificationManager.notify(notificationId, builder.build());
     }
+
+    private void addToLog() {
+        UserActivityModel userActivityModel = new UserActivityModel();
+        userActivityModel.setId(fileId);
+        userActivityModel.setExtension(getFileExtension(path));
+        userActivityModel.setMessage("Uploaded a file " + fileName);
+        userActivityModel.setFilePath(path);
+        userActivityModel.setName(fileName);
+        userActivityModel.setTimeStamp(Calendar.getInstance().getTimeInMillis());
+        userActivityModel.set_id(fileId);
+        userActivityModel.setIconLink(iconLink);
+        userActivityModel.setType(ACTION_FILE_ADDED);
+        Database.getInstance(getApplicationContext()).getUserActivityDao()
+                .insertRecent(userActivityModel);
+    }
+
 }

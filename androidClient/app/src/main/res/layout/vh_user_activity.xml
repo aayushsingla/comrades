@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
     android:orientation="vertical">
@@ -11,32 +13,23 @@
     <FrameLayout
         android:id="@+id/layout_file"
         android:layout_width="60dp"
-        android:layout_height="150dp"
+        android:layout_height="147dp"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/colorPrimary">
-
-        </View>
-
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/image_action"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:scaleType="fitCenter"
-            app:placeholderImage="@drawable/ic_file"
-            app:roundAsCircle="true" />
+            android:scaleType="fitCenter" />
 
     </FrameLayout>
 
     <TextView
+        android:id="@+id/text_main"
         android:layout_width="274dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/ps_regular"
@@ -47,6 +40,7 @@
         app:layout_constraintLeft_toRightOf="@id/layout_file"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="94dp"
         tools:text="Added a new Course Mechanics of Oscillations and waves with code BITS-F000 " />
 
     <FrameLayout
@@ -62,8 +56,7 @@
         <View
             android:layout_width="2dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="29dp"
-            android:background="@color/colorPrimary">
+            android:layout_marginStart="29dp">
 
         </View>
 
@@ -75,7 +68,7 @@
             android:background="@drawable/circular_shape_time_user_activity"
             android:orientation="horizontal">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/image_clock"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -84,9 +77,10 @@
                 android:adjustViewBounds="true"
                 android:padding="2dp"
                 android:scaleType="fitCenter"
-                app:placeholderImage="@drawable/ic_access_time_black_24dp" />
+                android:src="@drawable/ic_access_time_black_24dp" />
 
             <TextView
+                android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -102,8 +96,9 @@
 
         </LinearLayout>
 
+
         <ImageView
-            android:id="@+id/btn_edit"
+            android:id="@+id/btn_delete"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical|end"
@@ -111,7 +106,7 @@
             android:src="@drawable/ic_delete_forever_black_24dp" />
 
         <ImageView
-            android:id="@+id/btn_delete"
+            android:id="@+id/btn_edit"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical|end"

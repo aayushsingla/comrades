@@ -15,12 +15,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.macbitsgoa.comrades.BuildConfig;
 import com.macbitsgoa.comrades.R;
 import com.macbitsgoa.comrades.coursematerial.CourseActivity;
+import com.macbitsgoa.comrades.useractivity.UserActivityModel;
+import com.macbitsgoa.comrades.useractivity.UserActivityVm;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Calendar;
 import java.util.Objects;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
+
+import static com.macbitsgoa.comrades.useractivity.UserActivity.ACTION_COURSE_ADDED;
 
 
 /**
@@ -38,10 +45,11 @@ public class AddCourseFragment extends DialogFragment implements TextWatcher {
     private Dialog.OnClickListener positiveClickListener;
 
 
+    @NotNull
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = getActivity().getLayoutInflater().inflate(R.layout.activity_add_course, null);
+        View view = Objects.requireNonNull(getActivity()).getLayoutInflater().inflate(R.layout.activity_add_course, null);
         nameEt = view.findViewById(R.id.et_course_name);
         streamIdEt = view.findViewById(R.id.et_stream_code);
         courseNumberEt = view.findViewById(R.id.et_course_number);
@@ -97,6 +105,19 @@ public class AddCourseFragment extends DialogFragment implements TextWatcher {
                     myCourse.setCode((streamId + "-" + courseNumber));
                     myCourse.setFollowing(null);
                     dbr.setValue(myCourse);
+
+                    UserActivityVm userActivityVm = ViewModelProviders.of(getActivity()).get(UserActivityVm.class);
+                    UserActivityModel userActivityModel = new UserActivityModel();
+                    userActivityModel.setId(key);
+                    userActivityModel.setName(courseName);
+                    userActivityModel.setMessage("Added a new Course " + courseName + " with course Id "
+                            + streamId + "-" + courseNumber);
+                    userActivityModel.setCode(streamId + "-" + courseNumber);
+                    userActivityModel.setTimeStamp(Calendar.getInstance().getTimeInMillis());
+                    userActivityModel.set_id(key);
+                    userActivityModel.setType(ACTION_COURSE_ADDED);
+                    userActivityVm.insertRecent(userActivityModel);
+
                 } else {
                     Context context = getContext();
                     new AlertDialog.Builder(getContext())

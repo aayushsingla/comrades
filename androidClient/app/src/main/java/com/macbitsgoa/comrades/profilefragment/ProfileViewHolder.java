@@ -10,13 +10,13 @@ import android.widget.CompoundButton;
 import android.widget.PopupWindow;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.macbitsgoa.comrades.R;
 import com.macbitsgoa.comrades.coursematerial.CourseActivity;
 import com.macbitsgoa.comrades.eateries.EateriesActivity;
 import com.macbitsgoa.comrades.subscribedcourses.SubscribedCoursesActivity;
+import com.macbitsgoa.comrades.useractivity.UserActivity;
 
 import java.util.Objects;
 
@@ -57,8 +57,9 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder implements View.O
             case "Imp. Documents":
                 CourseActivity.launchCourse(view.getContext(), "-LJUx7EJ78rkt41kHNFs", "Imp. Docs");
                 break;
-            case "My Uploads":
-                Toast.makeText(view.getContext(), "Coming Soon", Toast.LENGTH_LONG).show();
+            case "My Activity":
+                Intent activityLogIntent = new Intent(view.getContext(), UserActivity.class);
+                view.getContext().startActivity(activityLogIntent);
                 break;
             case "Terms And Conditions":
                 View v = LayoutInflater.from(view.getContext())

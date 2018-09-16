@@ -52,7 +52,7 @@
             android:name=".coursematerial.DownloadService"
             android:enabled="true">
         </service>
-        
+
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name"
@@ -69,10 +69,15 @@
         </activity>
         <activity
             android:name=".subscribedcourses.SubscribedCoursesActivity"
-            android:label="@string/title_activity_subscribed_courses"></activity>
+            android:label="@string/title_activity_subscribed_courses">
+
+        </activity>
+
         <activity
             android:name=".ranks.RankActivity"
-            android:label="@string/title_activity_rank"></activity>
+            android:label="@string/title_activity_rank">
+
+        </activity>
         <activity
             android:name=".search.CourseSearchActivity"
             android:launchMode="singleTop">
@@ -102,8 +107,10 @@
         <activity android:name=".aboutmac.AboutMacActivity" />
         <activity android:name=".TutorialActivity" />
         <activity
-            android:name=".UserActivity.UserActivity"
-            android:label="@string/title_activity_user_actibity"></activity>
+            android:name=".useractivity.UserActivity"
+            android:label="@string/title_activity_user_actibity">
+
+        </activity>
     </application>
 
 </manifest>

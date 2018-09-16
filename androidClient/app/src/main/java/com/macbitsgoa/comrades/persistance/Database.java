@@ -6,6 +6,8 @@ import com.macbitsgoa.comrades.courselistfragment.CourseDao;
 import com.macbitsgoa.comrades.courselistfragment.MyCourse;
 import com.macbitsgoa.comrades.coursematerial.CourseMaterial;
 import com.macbitsgoa.comrades.coursematerial.MaterialDao;
+import com.macbitsgoa.comrades.useractivity.UserActivityDao;
+import com.macbitsgoa.comrades.useractivity.UserActivityModel;
 
 import androidx.annotation.NonNull;
 import androidx.room.Room;
@@ -17,7 +19,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  * @author Rushikesh Jogdand.
  */
 @androidx.room.Database(entities = {Person.class, Course.class,
-        Material.class, MyCourse.class, CourseMaterial.class},
+        Material.class, MyCourse.class, CourseMaterial.class, UserActivityModel.class},
         version = 2)
 public abstract class Database extends RoomDatabase {
 
@@ -53,4 +55,5 @@ public abstract class Database extends RoomDatabase {
 
     public abstract MaterialDao getMaterialDao();
 
+    public abstract UserActivityDao getUserActivityDao();
 }
