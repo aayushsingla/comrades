@@ -51,6 +51,10 @@ public class MaterialVm extends AndroidViewModel {
         return materialList;
     }
 
+    public LiveData<List<CourseMaterial>> checkFileExists(String hashId) {
+        return mRepository.checkFileExists(hashId);
+    }
+
     public void insert(CourseMaterial courseMaterial) {
         mRepository.insert(courseMaterial);
     }

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import static com.macbitsgoa.comrades.useractivity.UserActivity.ACTION_COURSE_ADDED;
 import static com.macbitsgoa.comrades.useractivity.UserActivity.ACTION_COURSE_RENAMED;
 import static com.macbitsgoa.comrades.useractivity.UserActivity.ACTION_FILE_ADDED;
+import static com.macbitsgoa.comrades.useractivity.UserActivity.ACTION_FILE_DELETED;
 import static com.macbitsgoa.comrades.useractivity.UserActivity.ACTION_FILE_RENAMED;
 
 class UserActivityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -46,17 +47,22 @@ class UserActivityViewHolder extends RecyclerView.ViewHolder implements View.OnC
             imageAction.setColorFilter(R.color.colorPrimary);
             btnDelete.setVisibility(View.GONE);
         } else if (userActivityModel.getType().equals(ACTION_COURSE_RENAMED)) {
-            imageAction.setImageResource(R.drawable.file_edit_white_outline);
+            imageAction.setImageResource(R.drawable.file_edit_white);
             imageAction.setColorFilter(R.color.colorPrimary);
             btnDelete.setVisibility(View.GONE);
         } else if (userActivityModel.getType().equals(ACTION_FILE_RENAMED)) {
-            imageAction.setImageResource(R.drawable.file_edit_white_outline);
+            imageAction.setImageResource(R.drawable.file_edit_white);
             imageAction.setColorFilter(R.color.colorPrimary);
             btnDelete.setVisibility(View.GONE);
         } else if (userActivityModel.getType().equals(ACTION_FILE_ADDED)) {
             imageAction.setImageResource(R.drawable.ic_add_file_full);
             imageAction.setColorFilter(R.color.colorPrimary);
             btnDelete.setOnClickListener(this);
+        } else if (userActivityModel.getType().equals(ACTION_FILE_DELETED)) {
+            imageAction.setImageResource(R.drawable.file_delete);
+            imageAction.setColorFilter(R.color.colorPrimary);
+            btnEdit.setVisibility(View.GONE);
+            btnDelete.setVisibility(View.GONE);
         }
 
         btnEdit.setOnClickListener(this);
@@ -70,12 +76,20 @@ class UserActivityViewHolder extends RecyclerView.ViewHolder implements View.OnC
         FragmentManager fm = ((AppCompatActivity) v.getContext()).getSupportFragmentManager();
         switch (v.getId()) {
             case R.id.btn_delete:
+                EditDeleteDialog.newInstance(ACTION_FILE_DELETED, null, userActivityModel.getCourseId(),
+                        null, userActivityModel.getName(), userActivityModel.get_id(), userActivityModel.getHashId())
+                        .show(fm.beginTransaction(), "deleteFileFragment");
                 break;
-
             case R.id.btn_edit:
-                EditDeleteDialog.newInstance(ACTION_COURSE_RENAMED, userActivityModel.getName(),
-                        userActivityModel.getCode(), null, userActivityModel.get_id())
-                        .show(fm.beginTransaction(), "editCourseFragment");
+                if (userActivityModel.getType().equals(ACTION_COURSE_ADDED) || userActivityModel.getType().equals(ACTION_COURSE_RENAMED)) {
+                    EditDeleteDialog.newInstance(ACTION_COURSE_RENAMED, userActivityModel.getName(), null,
+                            userActivityModel.getCode(), null, userActivityModel.get_id(), null)
+                            .show(fm.beginTransaction(), "editCourseFragment");
+                } else if (userActivityModel.getType().equals(ACTION_FILE_ADDED) || userActivityModel.getType().equals(ACTION_FILE_RENAMED)) {
+                    EditDeleteDialog.newInstance(ACTION_FILE_RENAMED, null, userActivityModel.getCourseId(),
+                            null, userActivityModel.getName(), userActivityModel.get_id(), userActivityModel.getHashId())
+                            .show(fm.beginTransaction(), "editFileFragment");
+                }
                 break;
             default:
                 break;

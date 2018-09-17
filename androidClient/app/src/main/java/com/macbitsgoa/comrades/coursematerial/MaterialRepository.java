@@ -46,6 +46,10 @@ public class MaterialRepository {
         return materialList;
     }
 
+    public LiveData<List<CourseMaterial>> checkFileExists(String hashId) {
+        return courseDao.checkHashId(hashId);
+    }
+
     public void insert(CourseMaterial courseMaterial) {
         new MaterialRepository.insertAsyncTask(courseDao).execute(courseMaterial);
     }

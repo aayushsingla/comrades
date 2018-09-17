@@ -1,6 +1,5 @@
 package com.macbitsgoa.comrades.useractivity;
 
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -15,13 +14,18 @@ public class UserActivityModel {
     public String _id;
     @PrimaryKey(autoGenerate = true)
     public Long primaryKey;
+    //only available for files.For courses _id=courseId
     @ColumnInfo(name = "courseId")
     public String courseId;
-    @ColumnInfo(name = "name") //course name for courses and file name for files
+    @ColumnInfo(name = "hashId")
+    public String hashId;
+    //course name for courses and file name for files
+    @ColumnInfo(name = "name")
     public String name;
     @ColumnInfo(name = "filePath")
     public String filePath;
-    @ColumnInfo(name = "type") //type of action: fileAdded, courseAdded, fileRenamed, courseRenamed
+    //type of action: fileAdded, courseAdded, fileRenamed, courseRenamed, courseDeleted
+    @ColumnInfo(name = "type")
     public String type;
     @ColumnInfo(name = "code")
     private String code;
@@ -50,6 +54,14 @@ public class UserActivityModel {
 
     public void setId(String id) {
         this._id = id;
+    }
+
+    public String getHashId() {
+        return hashId;
+    }
+
+    public void setHashId(String hashId) {
+        this.hashId = hashId;
     }
 
     @NonNull
@@ -85,6 +97,15 @@ public class UserActivityModel {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
 
     public String getMimeType() {
         return mimeType;

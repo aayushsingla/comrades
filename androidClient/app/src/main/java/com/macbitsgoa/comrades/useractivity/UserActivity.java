@@ -19,6 +19,8 @@ public class UserActivity extends AppCompatActivity {
     public static final String ACTION_FILE_ADDED = "fileAdded";
     public static final String ACTION_COURSE_RENAMED = "courseRenamed";
     public static final String ACTION_FILE_RENAMED = "fileRenamed";
+    public static final String ACTION_FILE_DELETED = "fileDeleted";
+
     private final ArrayList<UserActivityModel> activityModels = new ArrayList<>(0);
 
     @Override

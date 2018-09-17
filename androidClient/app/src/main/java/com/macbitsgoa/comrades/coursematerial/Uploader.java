@@ -324,7 +324,7 @@ public class Uploader extends Worker {
      * @return null if no duplicate exists, otherwise original file.
      */
     private CourseMaterial findDuplicate() {
-        return Database.getInstance(getApplicationContext()).getMaterialDao().checkHashId(fileHash);
+        return Database.getInstance(getApplicationContext()).getMaterialDao().checkHash(fileHash);
     }
 
     private void notifyDuplicate(String originalFileName) {
@@ -380,6 +380,8 @@ public class Uploader extends Worker {
         userActivityModel.setExtension(getFileExtension(path));
         userActivityModel.setMessage("Uploaded a file " + fileName);
         userActivityModel.setFilePath(path);
+        userActivityModel.setHashId(fileHash);
+        userActivityModel.setCourseId(courseId);
         userActivityModel.setName(fileName);
         userActivityModel.setTimeStamp(Calendar.getInstance().getTimeInMillis());
         userActivityModel.set_id(fileId);
